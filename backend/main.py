@@ -296,9 +296,10 @@ def check_alerts_and_notify():
                     elif alert.notification_method == "Email":
                         send_email(alert.email)
 
-                    # Update alert (e.g., mark as triggered if needed)
-                    alert.updated_at = datetime.utcnow()
+                    #Delete the alert after sending the notification
+                    db.delete(alert)
                     db.commit()
+                    
 
 # Schedule periodic alert checks
 scheduler.add_job(check_alerts_and_notify, "interval", minutes=0.2)
