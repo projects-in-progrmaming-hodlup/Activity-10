@@ -1,13 +1,40 @@
 /* src/styles/Header.css */
 .app-header {
-  background-color: #1E2530;
+  background-color: #C99200;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px;
+  padding: 10px;
+  
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  
+  
+  
+}
+.title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.logo {
+  height: 55px;
+  margin-right: 0px;
 }
 
 .app-header h1 {
-  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  color: #090909;
   font-size: 40px;
   margin: 0;
   font-weight: bold;
+}
+
+.crypto-companion {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #090909;
+  
 }

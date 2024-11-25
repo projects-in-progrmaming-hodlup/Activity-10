@@ -58,3 +58,29 @@
   .modal-button:hover {
     background-color: #3D4555;
   }
+
+  .confirmation-details p {
+    color: #8B8F95;
+    font-size: 16px;
+    margin: 10px 0;
+    line-height: 1.8;
+  }
+
+  .error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border-left: 4px solid #ff0000;
+    font-size: 14px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .error-message::before {
+    content: "⚠️";
+    margin-right: 8px;
+    font-size: 16px;
+  }

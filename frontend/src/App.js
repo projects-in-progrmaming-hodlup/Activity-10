@@ -11,6 +11,8 @@ function App() {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  
 
   const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
@@ -35,6 +37,8 @@ function App() {
   const handleSubmit = (data) => {
     setAlertData(data);
     console.log("Alert Data:", data);
+    
+    
   };
 
   return (
@@ -54,6 +58,8 @@ function App() {
           onClose={() => setAlertData(null)}
         />
       )}
+      
+    
     </div>
   );
 }

@@ -6,13 +6,53 @@
   margin: 50px auto;
   max-width: 500px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  
+
+}
+.form-group {
+  margin-bottom: 45px;  
+}
+
+.form-group label {
+  display: block;
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 20px;  
+}
+.crypto-details {
+  background-color: #1E2530;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.crypto-details p {
+  margin: 12px 0;
+  line-height: 2;
+  color: #ffffff;
+}
+
+.input-group {
+  margin-top: 35px;
+  margin-bottom: 35px;  
+}
+
+.email-section, .phone-section {
+  margin-top: 10px;    
+  margin-bottom: 50px; 
+}
+
+.dropdown-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .notification-form h2 {
-  color: #FF6B8B;
+  color: #C99200;
   font-size: 35px;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .form-group {
@@ -37,20 +77,4 @@
   font-size: 16px;
 }
 
-.submit-button {
-  background-color: #FF6B8B;
-  color: #ffffff;
-  border: none;
-  padding: 14px 28px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
 
-.submit-button:hover {
-  background-color: #ff5277;
-}

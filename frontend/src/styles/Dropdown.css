@@ -7,7 +7,7 @@
   appearance: none;
   background-color: #1E2530;
   border: 1px solid #3D4555;
-  color: #ffffff;
+  color: #eee7e7;
   padding: 14px 40px 14px 14px;
   border-radius: 6px;
   cursor: pointer;
@@ -25,4 +25,35 @@
   padding: 3px;
   transform: translateY(-50%) rotate(45deg);
 }
+.form-group {
+  margin-bottom: 45px;
+}
 
+.form-group label {
+  display: block;
+  margin-bottom: 25px;  /* Increased spacing between label and dropdown */
+}
+
+.dropdown-container {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.input-field {
+  margin-top: 25px;  /* Added space above input fields */
+}
+
+/* Specific spacing for notification method section */
+.notification-method {
+  margin-top: 35px;
+}
+
+/* Space between input and button */
+.input-group {
+  margin-bottom: 30px;
+}
+
+/* Maintain consistent spacing for threshold input */
+.threshold-input {
+  margin-top: 25px;
+}

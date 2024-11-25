@@ -5,7 +5,12 @@ import '../styles/Header.css';
 const Header = () => {
   return (
     <header className="app-header">
-      <h1>HodlUp!</h1>
+      <div className="header-content">
+        <img src="/logo.png" alt="HodlUp Logo" className="logo" />
+        <h1>HodlUp!</h1>
+        <span className="crypto-companion">Your Ultimate Crypto Companion</span>
+
+      </div>
     </header>
   );
 };
