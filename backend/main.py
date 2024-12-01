@@ -255,6 +255,7 @@ async def create_alert(alert_data: dict, db: Session = Depends(get_db)):
     # Parse alert data
     crypto_id = alert_data.get("crypto_id")
     threshold_price = alert_data.get("threshold_price")
+    lower_threshold_price = alert_data.get("lower_threshold_price")
     notification_method = alert_data.get("notification_method")
     phone_number = alert_data.get("phoneNumber")
     email = alert_data.get("email")
@@ -264,6 +265,7 @@ async def create_alert(alert_data: dict, db: Session = Depends(get_db)):
         user_id=alert_data.get("user_id"),  # Ensure the `user_id` is provided
         crypto_id=crypto_id,
         threshold_price=threshold_price,
+        lower_threshold_price=lower_threshold_price,
         method=alert_data.get("notification_type"),
         notification_method=notification_method,
         phone_number=phone_number,
@@ -290,7 +292,7 @@ def check_alerts_and_notify():
             # Check alerts for this cryptocurrency
             alerts = db.query(Alert).filter_by(crypto_id=db_crypto.crypto_id).all()
             for alert in alerts:
-                if db_crypto.hourly_price >= alert.threshold_price:
+                if db_crypto.hourly_price >= alert.threshold_price or db_crypto.hourly_price <= alert.lower_threshold_price :
                     if alert.notification_method == "Phone Call":
                         make_call(alert.phone_number)
                     elif alert.notification_method == "Email":

@@ -37,8 +37,6 @@ function App() {
   const handleSubmit = (data) => {
     setAlertData(data);
     console.log("Alert Data:", data);
-    
-    
   };
 
   return (

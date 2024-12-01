@@ -8,6 +8,7 @@ const NotificationForm = ({ onSubmit, cryptocurrencies }) => {
   const [selectedCrypto, setSelectedCrypto] = useState(cryptocurrencies[0]?.id || "");
   const [notificationType, setNotificationType] = useState("Price");
   const [thresholdValue, setThresholdValue] = useState("");
+  const [lowerThresholdValue, setLowerThresholdValue] = useState("");
   const [notificationMethod, setNotificationMethod] = useState("Email");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -99,6 +100,7 @@ const NotificationForm = ({ onSubmit, cryptocurrencies }) => {
       crypto_id: selectedCrypto,
       notification_type: notificationType,
       threshold_price: parseFloat(thresholdValue),
+      lower_threshold_price: parseFloat(lowerThresholdValue),
       notification_method: notificationMethod,
       phoneNumber: notificationMethod === 'Phone Call' ? phoneNumber : null, // Include phone number only if Phone Call is selected
       email: notificationMethod === 'Email' ? email : null, // Include email only if Phone Call is selected
@@ -168,11 +170,22 @@ const NotificationForm = ({ onSubmit, cryptocurrencies }) => {
 
       {/* Input for Threshold */}
       <div className="input-group">
-        <label>Set Threshold:</label>
+        <label>Set Upper Threshold:</label>
         <input
           type="number"
           value={thresholdValue}
           onChange={(e) => setThresholdValue(e.target.value)}
+          step="any"
+          placeholder="Enter threshold value"
+        />
+      </div>
+      
+      <div className="input-group">
+        <label>Set Lower Threshold:</label>
+        <input
+          type="number"
+          value={lowerThresholdValue}
+          onChange={(e) => setLowerThresholdValue(e.target.value)}
           step="any"
           placeholder="Enter threshold value"
         />

@@ -31,6 +31,7 @@ class Alert(Base):
     user_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
     crypto_id = Column(Integer, ForeignKey('cryptocurrencies.crypto_id'), nullable=False)
     threshold_price = Column(Float, nullable=True)
+    lower_threshold_price = Column(Float, nullable=True)
     threshold_percentage = Column(Float, nullable=True)
     method = Column(String(50), nullable=True)
     notification_method = Column(String(50), nullable=True)
