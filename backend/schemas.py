@@ -9,3 +9,4 @@ class AlertCreate(BaseModel):
     threshold_percentage: Optional[float] = None
     method: Optional[str] = "Threshold"
     notification_method: str
+p
