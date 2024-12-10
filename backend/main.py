@@ -13,6 +13,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from twilio.rest import Client
 from models import Alert
+from reddit_scraper import fetch_reddit_comments
+from reddit_scraper import fetch_reddit_comments_with_sentiment
+
+
 
 # Load environment variables
 load_dotenv()
@@ -302,6 +306,31 @@ def check_alerts_and_notify():
                     db.delete(alert)
                     db.commit()
                     
+@app.get("/reddit-comments/")
+def get_reddit_comments():
+    try:
+        # Fetch Reddit comments
+        comments_data = fetch_reddit_comments(subreddit_name="cryptocurrency", limit_posts=5, limit_comments=5)
+        return {"status": "success", "data": comments_data}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/test-reddit-scraper")
+def test_reddit_scraper():
+    data = fetch_reddit_comments(subreddit_name="cryptocurrency", limit_posts=3, limit_comments=3)
+    return {"status": "success", "data": data}
+
+@app.get("/reddit-comments-sentiment/")
+def get_reddit_comments_with_sentiment():
+    """
+    API endpoint to fetch Reddit posts with sentiment analysis.
+    """
+    try:
+        data = fetch_reddit_comments_with_sentiment(subreddit_name="cryptocurrency", limit_posts=3, limit_comments=3)
+        return {"status": "success", "data": data}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 
 # Schedule periodic alert checks
 scheduler.add_job(check_alerts_and_notify, "interval", minutes=0.2)
