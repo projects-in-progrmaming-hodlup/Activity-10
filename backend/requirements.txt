@@ -11,3 +11,4 @@ praw
 twilio
 openai
 email-validator
+nltk

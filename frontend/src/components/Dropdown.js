@@ -2,14 +2,15 @@
 import React from 'react';
 import '../styles/Dropdown.css';
 
-
-const Dropdown = ({ label, options, onSelect, selectedValue }) => {
+const Dropdown = ({ label, options, onSelect, selectedValue, disabled }) => {
   return (
-    <div>
+    <div className="dropdown-container">
       <label>{label}</label>
       <select 
         value={selectedValue} 
-        onChange={(e) => onSelect(e.target.value)}>
+        onChange={(e) => onSelect(e.target.value)}
+        disabled={disabled}
+      >
         {options.map((option, index) => (
           <option key={index} value={option.value || option}>
             {option.label || option} 

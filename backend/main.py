@@ -159,7 +159,13 @@ class EmailRequest(BaseModel):
 class PhoneCallRequest(BaseModel):
     phone_number: str
 
-# Function to send email
+EMAIL_CONFIG = {
+    "SMTP_SERVER": "smtp.gmail.com",
+    "SMTP_PORT": 587,
+    "EMAIL_ADDRESS": os.getenv("EMAIL_USER"),
+    "EMAIL_PASSWORD": os.getenv("EMAIL_PASSWORD")
+}
+
 def send_email(recipient_email: str):
     try:
         # Email content
@@ -281,30 +287,36 @@ async def create_alert(alert_data: dict, db: Session = Depends(get_db)):
     # Return success response
     return {"message": "Alert created successfully!"}
 
-# Function to check alerts and trigger notifications
 def check_alerts_and_notify():
     with SessionLocal() as db:
-        cryptos = fetch_coingecko_data()  # Get latest prices
-        if not cryptos:
+        current_prices = fetch_coingecko_data()
+        if not current_prices:
             return
-
-        for crypto in cryptos:
-            db_crypto = db.query(Cryptocurrency).filter_by(name=crypto["id"]).first()
-            if not db_crypto:
-                continue
-
-            # Check alerts for this cryptocurrency
-            alerts = db.query(Alert).filter_by(crypto_id=db_crypto.crypto_id).all()
-            for alert in alerts:
-                if db_crypto.hourly_price >= alert.threshold_price or db_crypto.hourly_price <= alert.lower_threshold_price :
-                    if alert.notification_method == "Phone Call":
-                        make_call(alert.phone_number)
-                    elif alert.notification_method == "Email":
-                        send_email(alert.email)
-
-                    #Delete the alert after sending the notification
-                    db.delete(alert)
-                    db.commit()
+            
+        price_map = {crypto["id"]: crypto["current_price"] for crypto in current_prices}
+        
+        alerts = db.query(Alert).all()
+        for alert in alerts:
+            crypto = db.query(Cryptocurrency).filter_by(crypto_id=alert.crypto_id).first()
+            current_price = price_map.get(crypto.name)
+            
+            if current_price:
+                if (alert.threshold_price and current_price >= alert.threshold_price) or \
+                   (alert.lower_threshold_price and current_price <= alert.lower_threshold_price):
+                    try:
+                        if alert.notification_method == "Email":
+                            send_email(
+                                alert.email,
+                                "Crypto Price Alert",
+                                f"Your {crypto.name} alert threshold has been reached. Current price: ${current_price}"
+                            )
+                        elif alert.notification_method == "Phone Call":
+                            make_call(alert.phone_number)
+                        
+                        db.delete(alert)
+                        db.commit()
+                    except Exception as e:
+                        print(f"Failed to send notification: {e}")
                     
 @app.get("/reddit-comments/")
 def get_reddit_comments():

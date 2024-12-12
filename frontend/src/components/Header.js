@@ -8,8 +8,16 @@ const Header = () => {
       <div className="header-content">
         <img src="/logo.png" alt="HodlUp Logo" className="logo" />
         <h1>HodlUp!</h1>
-        <span className="crypto-companion">Your Ultimate Crypto Companion</span>
-
+        <span
+          className="crypto-companion"
+          style={{
+            marginLeft: '10px',
+            fontFamily: 'monospace',
+            fontSize: '16px',
+          }}
+        >
+          Your Ultimate Crypto Companion
+        </span>
       </div>
     </header>
   );

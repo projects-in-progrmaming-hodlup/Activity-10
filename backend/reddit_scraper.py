@@ -1,40 +1,63 @@
-import praw
+# reddit_scraper.py
 import os
-from dotenv import load_dotenv
+import praw
+from nltk.sentiment import SentimentIntensityAnalyzer
+import nltk
 
-def fetch_reddit_comments(subreddit_name="cryptocurrency", limit_posts=5, limit_comments=5):
-    # Set up Reddit API credentials
-    reddit = praw.Reddit(
-        client_id=os.getenv("REDDIT_CLIENT_ID"),
-        client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
-        user_agent=os.getenv("REDDIT_USER_AGENT")
-    )
+# Download required NLTK data
+nltk.download('vader_lexicon', quiet=True)
 
-    subreddit = reddit.subreddit(subreddit_name)
-    print(f"Fetching posts from r/{subreddit_name}...")
+def fetch_reddit_comments_with_sentiment(subreddit_name="cryptocurrency", limit_posts=5, limit_comments=5):
+    """
+    Fetches Reddit posts and comments with sentiment analysis from a specified subreddit.
+    Returns processed data with sentiment scores and labels.
+    """
+    try:
+        sia = SentimentIntensityAnalyzer()
+        
+        reddit = praw.Reddit(
+            client_id=os.getenv("REDDIT_CLIENT_ID"),
+            client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+            user_agent=os.getenv("REDDIT_USER_AGENT")
+        )
 
-    posts_data = []
-    posts = subreddit.hot(limit=limit_posts)
+        subreddit = reddit.subreddit(subreddit_name)
+        posts_data = []
 
-    for post in posts:
-        post_data = {
-            "title": post.title,
-            "url": post.url,
-            "score": post.score,
-            "num_comments": post.num_comments,
-            "comments": []
-        }
+        for post in subreddit.hot(limit=limit_posts):
+            title_sentiment = sia.polarity_scores(post.title)
+            
+            post_data = {
+                "title": post.title,
+                "score": post.score,
+                "title_sentiment": title_sentiment["compound"],
+                "comments": []
+            }
 
-        # Fetch comments for the post
-        post.comments.replace_more(limit=0)
-        comments = post.comments.list()
+            post.comments.replace_more(limit=0)
+            for comment in post.comments.list()[:limit_comments]:
+                comment_sentiment = sia.polarity_scores(comment.body)
+                sentiment_label = "Positive" if comment_sentiment["compound"] > 0.05 \
+                                else "Negative" if comment_sentiment["compound"] < -0.05 \
+                                else "Neutral"
+                
+                post_data["comments"].append({
+                    "body": comment.body,
+                    "sentiment_score": comment_sentiment["compound"],
+                    "sentiment": sentiment_label,
+                    "detail": {
+                        "pos": comment_sentiment["pos"],
+                        "neg": comment_sentiment["neg"],
+                        "neu": comment_sentiment["neu"]
+                    }
+                })
+            
+            posts_data.append(post_data)
 
-        for comment in comments[:limit_comments]:
-            post_data["comments"].append({
-                "author": str(comment.author),
-                "body": comment.body
-            })
+        return posts_data
+    except Exception as e:
+        print(f"Error in fetch_reddit_comments_with_sentiment: {str(e)}")
+        return []
 
-        posts_data.append(post_data)
-
-    return posts_data
+# For backward compatibility
+fetch_reddit_comments = fetch_reddit_comments_with_sentiment

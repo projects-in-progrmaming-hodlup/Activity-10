@@ -1,39 +1,26 @@
-/* src/styles/Header.css */
 .app-header {
-  background-color: #C99200;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  
+  background: linear-gradient(90deg, #1E1E2E 0%, #252A3D 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 20px 40px;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  
-  
-  
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.title-container {
-  display: flex;
-  flex-direction: column;
-  
-}
+
 .logo {
-  height: 55px;
-  margin-right: 0px;
+  height: 40px;
+  margin-right: 20px;
 }
 
 .app-header h1 {
-  font-family: 'Montserrat', sans-serif;
-  color: #090909;
-  font-size: 40px;
+  background: linear-gradient(90deg, #FFB800 0%, #FFCD4D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 32px;
+  font-weight: 700;
   margin: 0;
-  font-weight: bold;
-}
-
-.crypto-companion {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
-  color: #090909;
-  
 }
