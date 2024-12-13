@@ -17,7 +17,7 @@ HODL Up is an innovative cryptocurrency monitoring tool that provides customizab
 - **Backend**: FastAPI
 - **Database**: MySQL
 - **APIs**: Reddit API, CoinGecko API
-- **Sentiment Analysis**: OpenAI model
+- **Sentiment Analysis**: NLTK's VADER (Valence Aware Dictionary and sEntiment Reasoner) sentiment analyzer
 
 ## Setup Instructions
 
